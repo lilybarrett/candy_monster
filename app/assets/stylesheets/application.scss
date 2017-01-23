@@ -1,0 +1,32 @@
+@import "foundation_and_overrides";
+
+.title-row {
+  background-color: #FF1493;
+  max-width: 100%;
+
+  .normal {
+    h1 {
+      position: absolute;
+      top: 175px;
+      left: 0;
+      width: 100%;
+      font-family: 'Gloria Hallelujah', cursive;
+      font-size: 7rem;
+      color: black;
+    }
+    img {
+      position: relative;
+      width: 70%;
+      height: 20em;
+    }
+  }
+  .mobile {
+    h1 {
+      font-family: 'Gloria Hallelujah', cursive;
+    }
+    img {
+      width: 100%;
+      height: 20em;
+    }
+  }
+}
