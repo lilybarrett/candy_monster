@@ -2,14 +2,13 @@ import React from 'react';
 import Candy from './Candy';
 
 const CandyList = (props) => {
-  let candies = props.candies.map(candy => {
+
+  let candies = props.candies.map((candy) => {
     return(
-      <li>
-        <Candy
-          key={candy.id}
-          name={candy.name}
-        />
-      </li>
+      <Candy
+        key={candy.id}
+        name={candy.name}
+      />
     )
   })
 
