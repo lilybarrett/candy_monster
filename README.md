@@ -17,7 +17,6 @@
 
 ### How Do I Build Different Pages in React?
 
-http://stackoverflow.com/questions/31933359/using-react-in-a-multi-page-app
 
 ### Do I Need to Put Anything in My Assets/JavaScripts Folder?
 
