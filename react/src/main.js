@@ -1,17 +1,23 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import CandyList from './components/CandyList';
+import Candy from './components/Candy';
+import candies from './data/candies';
 
 $(function() {
   if (document.getElementById('main-list')) {
     ReactDOM.render(
-      <h2>This is the index page which will have a form on it</h2>,
+      <CandyList candies={candies}/>,
       document.getElementById('main-list')
     );
   };
+});
+
+$(function() {
   if (document.getElementById('show-page')) {
     ReactDOM.render(
-      <h2>This is the show page</h2>,
+      <Candy candies={candies}/>,
       document.getElementById('show-page')
     );
   }
