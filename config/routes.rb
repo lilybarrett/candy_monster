@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'candies#index'
 
-  resources :candies, only: [:index, :create, :show]
+  resources :candies, only: [:create, :show]
 
   namespace :api do
     namespace :v1 do
