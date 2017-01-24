@@ -116,7 +116,7 @@ Don't forget to import everything you need into your `main.js` file.
 
 Rails `params` are so nice. They're part of why convention over configuration is so awesome. They make it incredibly easy for us to grab form inputs, information from the URL about which page we're on, and so forth.
 
-Let's say I'm on Candy Monster's show page for a candy, and I want to use the Yum-o-Meter button to send a Fetch request to update the *yum* points for that candy. I can see from the URL that the candy's ID is `5`, but React doesn't use `params` like Rails does. What can I do?
+Let's say I'm on Candy Monster's show page for a candy, and I want to use the Yum-o-Meter button to send a Fetch request to update the *yum* points for that specific candy. I can see from the URL that the candy's ID is `5`, but React doesn't use `params` like Rails does. What can I do?
 
 On the `div` on `show.html.erb`, where I'm rendering the CounterButton component, I can add a special attribute, `data-id`, and pass in the `id` for the ActiveRecord object from my non-API controller's `show` action.
 
