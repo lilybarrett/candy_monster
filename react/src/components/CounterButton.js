@@ -21,7 +21,7 @@ class CounterButton extends Component {
       })
       .then(response => {
         if (response.ok) {
-          return response;
+          return response.json();
         } else {
           console.log("Oops");
           let errorMessage = `${response.status} ($response.statusText)`,
@@ -29,13 +29,10 @@ class CounterButton extends Component {
             throw(error);
         }
       })
-      .then(response => {
-        newClickCount = response.json();
-        return response;
-      })
-      .then(response => {
-        debugger;
-        this.setState({clickCount: newClickCount})
+      .then(data => {
+        console.log(data);
+        newClickCount = data.points;
+        this.setState({ clickCount: newClickCount })
       })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
 }
