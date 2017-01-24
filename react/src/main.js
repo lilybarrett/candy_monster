@@ -8,7 +8,7 @@ import candies from './data/candies';
 $(function() {
   if (document.getElementById('main-list')) {
     ReactDOM.render(
-      <CandyList candies={candies}/>,
+      <CandyList />,
       document.getElementById('main-list')
     );
   };

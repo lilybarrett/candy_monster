@@ -39,12 +39,13 @@ class CandyList extends Component {
         <CandyListItem
           id={candy.id}
           key={candy.id}
+          url={candy.image_url}
           name={candy.name}
         />
       )
     });
     return(
-      <div>
+      <div className="candy-index">
         {newCandies}
       </div>
     )

@@ -4,7 +4,7 @@ const Candy = (props) => {
 
   let thisCandyName;
   let thisCandyDescription;
-  
+
   if (document.getElementById('show-page')) {
     let pageId = parseInt(document.getElementById('show-page').dataset.id);
     props.candies.map(candy => {
@@ -16,7 +16,7 @@ const Candy = (props) => {
   }
 
   return(
-    <div>
+    <div className="candy-show">
       <p>{thisCandyName}</p>
       <p>{thisCandyDescription}</p>
     </div>
