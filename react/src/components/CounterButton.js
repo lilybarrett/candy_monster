@@ -11,14 +11,39 @@ class CounterButton extends Component {
   }
 
   handleClick(event) {
-    let newClickCount = this.state.clickCount + 1;
-    this.setState({ clickCount: newClickCount });
-  }
+    let newClickCount;
+    let pageId = parseInt(document.getElementById('counter-button').dataset.id);
+    let fetchBody = { id: pageId };
+
+    fetch(`http://localhost:3000/api/v1/candies/${pageId}`,
+      { method: "PATCH",
+        body: fetchBody
+      })
+      .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          console.log("Oops");
+          let errorMessage = `${response.status} ($response.statusText)`,
+            error = new Error(errorMessage);
+            throw(error);
+        }
+      })
+      .then(response => {
+        newClickCount = response.json();
+        return response;
+      })
+      .then(response => {
+        debugger;
+        this.setState({clickCount: newClickCount})
+      })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+}
 
   render() {
     return(
       <div onClick={this.handleClick}>
-        <h1>Points: {this.state.clickCount}</h1>
+        <h1>Yumometer: {this.state.clickCount}</h1>
       </div>
     );
   }
