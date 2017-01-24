@@ -159,4 +159,6 @@ A few tips from my own experiences...
 
 ### A Reminder
 
-React is new and constantly evolving! By learning it now, you're on the cutting-edge. However, we understand there are plenty of frustrations that come with working with a new framework that doesn't have set-in-stone conventions like Rails now does. Some of the stuff you'll see online, on Stack Overflow and such, is now out-of-date, even if it was posted relatively recently. Keep asking questions and plugging along!
+React is new! By learning it now, you're on the cutting-edge.
+
+However, we understand there are plenty of frustrations that come with working with a new library that doesn't have set-in-stone conventions like Rails does. You'll need to keep in mind that, since React is constantly and rapidly evolving, some of the stuff you'll see online, on Stack Overflow and such, is now out-of-date, even if it was posted relatively recently. So keep asking lots of questions, trying and failing and trying again, and just plugging along!
