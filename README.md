@@ -32,7 +32,11 @@ In your `controllers` folder, you should then create an `api` folder, a `v1` fol
 
 ### How Do My Controller Actions Change?
 
-Your API endpoint should only render JSON, allowing Rails & React to communicate & transmit data back and forth. The Candy Monster app also needs non-API controller actions representing your Rails views, because Rails uses its `index` and `show` views to display the React components we've created. If you'd rather use pure Rails to facilitate other actions, you should include those in your non-API controller, as well.
+Your API endpoint should only render JSON, allowing Rails & React to communicate & transmit data back and forth.
+
+The Candy Monster app also requires non-API controller actions representing your Rails views, because Rails needs to use its `index` and `show` views to display the React components we've created. (If you'd rather use pure Rails to facilitate other actions, you should include those in your non-API controller, as well.)
+
+This is also handy in case a user has JavaScript disabled on their browser, and you still want them to be able to view your site!
 
 ```
 resources :candies, only: [:index, :create, :show]
@@ -155,6 +159,4 @@ A few tips from my own experiences...
 
 ### A Reminder
 
-React is new and constantly evolving! By learning it now, you're on the cutting-edge. However, we understand there are plenty of frustrations that come with working with a new framework that doesn't have set-in-stone conventions like Rails now does. Some of the stuff you'll see online, on Stack Overflow and such, is now out-of-date, even if it was posted relatively recently.
-
-Keep asking questions and plugging along!
+React is new and constantly evolving! By learning it now, you're on the cutting-edge. However, we understand there are plenty of frustrations that come with working with a new framework that doesn't have set-in-stone conventions like Rails now does. Some of the stuff you'll see online, on Stack Overflow and such, is now out-of-date, even if it was posted relatively recently. Keep asking questions and plugging along!
