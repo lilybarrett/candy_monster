@@ -10,7 +10,7 @@ You can view your consumed candies on the index page, where the list of candies 
 
 We encourage you to namespace your API controllers.
 
-In your `controllers` folder, you should then create an `api` folder, a `v1` folder, and, finally, a `controller.rb` file within that. This helps keep your controllers organized, reminds you which ones are your API controllers, and allows you to store different versions of your API if need be.
+In your `controllers` folder, you should create an `api` folder, a `v1` folder, and, finally, a `controller.rb` file within that. This helps keep your controllers organized, reminds you which ones are your API controllers, and allows you to store different versions of your API if need be.
 
 Let's check out the Rails API endpoint for Candy Monster.
 
