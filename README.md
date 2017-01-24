@@ -136,7 +136,7 @@ Div/button on `show.html.erb` for rendering the CounterButton component:
 
 The super cool thing about `data-id` is that it translates into an object that JavaScript can understand! From my CounterButton component, I can now call `let pageId = parseInt(document.getElementById('counter-button').dataset.id);` and get the ActiveRecord object's ID back, storing it in `pageId`.
 
-I can then interpolate it into my Fetch call, as such: `fetch(`http://localhost:3000/api/v1/candies/${pageId}`)`.
+I can then interpolate it into my Fetch call, as such: `fetch('http://localhost:3000/api/v1/candies/${pageId}')`.
 
 ### How Do I Troubleshoot?
 
