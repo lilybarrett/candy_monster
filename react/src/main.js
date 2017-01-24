@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CandyList from './components/CandyList';
-import Candy from './components/Candy';
+import CounterButton from './components/CounterButton';
 import candies from './data/candies';
 
 $(function() {
@@ -15,10 +15,10 @@ $(function() {
 });
 
 $(function() {
-  if (document.getElementById('show-page')) {
+  if (document.getElementById('counter-button')) {
     ReactDOM.render(
-      <Candy candies={candies}/>,
-      document.getElementById('show-page')
+      <CounterButton/>,
+      document.getElementById('counter-button')
     );
   }
 });

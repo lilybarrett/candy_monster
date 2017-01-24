@@ -40,5 +40,13 @@
     height: 20em;
     margin-bottom: 7em;
   }
+}
 
+.show-div {
+  margin-top: 5em;
+  .show-page-img {
+    margin: auto;
+    height: 40em;
+    width: 40em;
+  }
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Candy from './Candy';
 import CandyListItem from './CandyListItem';
 
 class CandyList extends Component {

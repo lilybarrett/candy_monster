@@ -1,2 +1,10 @@
-<div id="show-page" data-id="<%= @candy.id %>">
+<div class="show-div row">
+  <div class="small-6 columns">
+    <img src="<%= @candy.image_url %>" class="show-page-img"/>
+  </div>
+  <div class="small-6 columns">
+    <h1><strong>Candy:</strong> <%= @candy.name %></h1>
+    <h1><strong>Thoughts:</strong> <%= @candy.description %></h1>
+    <button type="button" class="button large" id="counter-button"></button>
+  </div>
 </div>
