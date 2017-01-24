@@ -6,16 +6,6 @@ Candy Monster is an app built in Rails and React, allowing you to add informatio
 
 You can view your consumed candies on the index page, where the list of candies has been built in React and the form for adding a new candy has been built in Rails. When you click on an image of a candy, you can navigate to the candy's show page, where the candy's information is displayed using a Rails ERB template and the "Yum-o-meter" button has been built in React.
 
-Basic set-up instructions:
-
-```
-git clone git@github.com:lilybarrett/candy_monster.git
-cd candy_monster
-bundle install
-npm install
-rake db:create && rake db:migrate && rake db:rollback && rake db:migrate && rake db:seed
-```
-
 ### How Do I Create a Rails API Endpoint?
 
 We encourage you to namespace your API controllers, as in the Candy Monster app:
@@ -162,3 +152,14 @@ A few tips from my own experiences...
 React is new! By learning it now, you're on the cutting-edge.
 
 However, we understand there are plenty of frustrations that come with working with a new library that doesn't have set-in-stone conventions like Rails does. You'll also need to keep in mind that, since React is constantly and rapidly evolving, some of the stuff you'll see online, on Stack Overflow and such, is now out-of-date, even if it was posted relatively recently. So keep asking lots of questions, trying and failing and trying again, and just plugging along!
+
+
+### Candy Monster: Basic Set-Up
+
+```
+git clone git@github.com:lilybarrett/candy_monster.git
+cd candy_monster
+bundle install
+npm install
+rake db:create && rake db:migrate && rake db:rollback && rake db:migrate && rake db:seed
+```
