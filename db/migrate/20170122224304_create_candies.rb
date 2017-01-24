@@ -4,6 +4,7 @@ class CreateCandies < ActiveRecord::Migration
       t.string :name, null: false
       t.text :image_url
       t.text :description
+      t.integer :points, default: 0
 
       t.timestamps
     end

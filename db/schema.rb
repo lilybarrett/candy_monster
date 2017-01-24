@@ -17,9 +17,10 @@ ActiveRecord::Schema.define(version: 20170122224304) do
   enable_extension "plpgsql"
 
   create_table "candies", force: :cascade do |t|
-    t.string   "name",        null: false
+    t.string   "name",                    null: false
     t.text     "image_url"
     t.text     "description"
+    t.integer  "points",      default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
