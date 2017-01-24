@@ -118,7 +118,7 @@ Rails `params` are so nice. They're part of why convention over configuration is
 
 Let's say I'm on Candy Monster's show page for a candy, and I want to use the Yum-o-Meter button to send a Fetch request to update the *yum* points for that candy. I can see from the URL that the candy's ID is `5`, but React doesn't use `params` like Rails does. What can I do?
 
-On the `div` on `show.html.erb`, where I'm rendering the CounterButton component, I can add a special attribute, `data-id` and pass in the `id` for the ActiveRecord object from my non-API controller's `show` action.
+On the `div` on `show.html.erb`, where I'm rendering the CounterButton component, I can add a special attribute, `data-id`, and pass in the `id` for the ActiveRecord object from my non-API controller's `show` action.
 
 Show action in controller:
 
@@ -134,9 +134,15 @@ Div/button on `show.html.erb` for rendering the CounterButton component:
 <button type="button" class="button large" id="counter-button" data-id="<%= @candy.id %>"></button>
 ```
 
-The super cool thing about `data-id` is that it translates into an object that JavaScript can understand! From my CounterButton component, I can now call `let pageId = parseInt(document.getElementById('counter-button').dataset.id);` and get the ActiveRecord object's ID back, storing it in `pageId`.
+The super cool thing about `data-id` is that it translates into an object that JavaScript can understand! From my CounterButton component, I can now use:
 
-I can then interpolate it into my Fetch call, as such:
+```
+let pageId = parseInt(document.getElementById('counter-button').dataset.id)
+```
+
+and get the ActiveRecord object's ID back, storing it in `pageId`.
+
+I can then interpolate `pageId` into my Fetch call, as such:
 
 ```
 fetch(`http://localhost:3000/api/v1/candies/${pageId}`)
