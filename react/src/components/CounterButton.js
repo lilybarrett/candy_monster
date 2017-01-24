@@ -10,6 +10,25 @@ class CounterButton extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount() {
+    let pageId = parseInt(document.getElementById('counter-button').dataset.id);
+    fetch(`http://localhost:3000/api/v1/candies/${pageId}`)
+      .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status} ($response.statusText)`,
+            error = new Error(errorMessage);
+          throw(error);
+        }
+      })
+      .then(response => response.json())
+      .then(body => {
+        this.setState({clickCount: body.points});
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
   handleClick(event) {
     let newClickCount;
     let pageId = parseInt(document.getElementById('counter-button').dataset.id);
@@ -32,6 +51,7 @@ class CounterButton extends Component {
       .then(data => {
         console.log(data);
         newClickCount = data.points;
+        debugger;
         this.setState({ clickCount: newClickCount })
       })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
