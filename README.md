@@ -33,6 +33,37 @@ resources :candies, only: [:index, :create, :show]
 
 ```
 
+```
+class CandiesController < ApplicationController
+
+  def create
+    @candy = Candy.new(candy_params)
+    if @candy.save!
+      flash[:notice] = "Candy successfully added!"
+      redirect_to candy_path(@candy)
+    else
+      flash[:error] = @candy.errors.full_messages.join('. ')
+      render :new
+    end
+  end
+
+  def index
+    @candy = Candy.new
+    @candies = Candy.all
+  end
+
+  def show
+    @candy = Candy.find(params[:id])
+  end
+
+  private
+
+  def candy_params
+    params.require(:candy).permit(:name, :description, :image_url)
+  end
+end
+```
+
 Pro-tip: Rails' Authenticity Token is used to prevent "cross-site request forgery (CSRF)" attacks. As an example, when you fill out a form for submitting a new candy to my app, Rails generates a hidden field storing the authenticity token, ensuring the server that the information is coming from Rails. However, in this case, we're not _just_ communicating with Rails, we're also communicating with a React app on our front-end! In our API controller, it makes sense to add the line `skip_before_action :verify_authenticity_token`.
 
 It's a good idea to use *strong params* in your API controller as well as in your regular controller.
