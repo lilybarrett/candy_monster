@@ -51,7 +51,6 @@ class CounterButton extends Component {
       .then(data => {
         console.log(data);
         newClickCount = data.points;
-        debugger;
         this.setState({ clickCount: newClickCount })
       })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
