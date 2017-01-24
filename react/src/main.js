@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CandyList from './components/CandyList';
 import CounterButton from './components/CounterButton';
-import candies from './data/candies';
 
 $(function() {
   if (document.getElementById('main-list')) {
