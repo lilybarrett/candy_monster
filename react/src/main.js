@@ -17,7 +17,7 @@ $(function() {
 $(function() {
   if (document.getElementById('counter-button')) {
     ReactDOM.render(
-      <CounterButton/>,
+      <CounterButton />,
       document.getElementById('counter-button')
     );
   }
