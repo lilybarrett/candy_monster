@@ -63,6 +63,19 @@ end
 
 First things first, create different Rails views with `div`s that have `id`s telling React where to render a component on that page. Easy peasy.
 
+in index.html.erb:
+
+```
+<div id="main-list">
+</div>
+```
+
+in show.html.erb:
+
+```
+<button type="button" class="button large" id="counter-button" data-id="<%= @candy.id %>"></button>
+```
+
 Well, that's great, you say. But how do I deal with rendering different ReactDOMs for different pages? I only have one `main.js` file, and it looks like this:
 
 ```
