@@ -4,95 +4,29 @@
 
 Candy Monster is an app built in Rails and React, allowing you to add information about the Valentine's Day candies you've consumed and loved (or hated).
 
-You can view your consumed candies on the index page, where the list of candies has been built in React and the form for adding a new candy has been built in Rails. When you click on an image of a candy, you can navigate to the candy's show page, where the candy's information is displayed using a Rails ERB template and the "Yum-o-meter" button has been built in React.
+You can view your consumed candies on the index page, where the list of candies has been built in React and the form for adding a new candy has been built in Rails. When you click on an image of a candy, you can navigate to the candy's show page, where the candy's information is displayed using a Rails ERB template and a React "Yum-o-meter" button allows you to set the candy's tastiness "score."
 
 ### How Do I Create a Rails API Endpoint?
 
-We encourage you to namespace your API controllers, as in the Candy Monster app:
+We encourage you to namespace your API controllers.
 
-```
-namespace :api do
-  namespace :v1 do
-    resources :candies, only: [:index, :update, :show]
-  end
-end
-```
+In your `controllers` folder, you should then create an `api` folder, a `v1` folder, and, finally, a `controller.rb` file within that. This helps keep your controllers organized, reminds you which ones are your API controllers, and allows you to store different versions of your API if need be.
 
-In your `controllers` folder, you should then create an `api` folder, a `v1` folder, and, finally, a `candies_controller.rb` within that. This helps keep your controllers organized, reminds you which ones are your API controllers, and allows you to store different versions of your API if need be.
+Let's check out the Rails API endpoint for Candy Monster.
 
 ### How Do My Controller Actions Change?
 
 Your API endpoint should only render JSON, allowing Rails & React to communicate & transmit data back and forth.
 
-The Candy Monster app also requires non-API controller actions representing your Rails views, because Rails needs to use its `index` and `show` views to display the React components we've created. (If you'd rather use pure Rails to facilitate other actions, you should include those in your non-API controller, as well.)
+The Candy Monster app, like others, also requires non-API controller actions representing Rails views. In this case, Rails needs to use its `index` and `show` views to display the React components we've created.
 
 This is also handy in case a user has JavaScript disabled on their browser, and you still want them to be able to view your site!
 
-```
-resources :candies, only: [:index, :create, :show]
+Pro-tip: Rails' Authenticity Token is used to prevent "cross-site request forgery (CSRF)" attacks. As an example, when you fill out a form for submitting a new candy to my app, Rails would _usually_ generate a hidden field storing the authenticity token, confirming with the server that the information is coming from Rails.
 
-```
-
-```
-class CandiesController < ApplicationController
-
-  def create
-    @candy = Candy.new(candy_params)
-    if @candy.save!
-      flash[:notice] = "Candy successfully added!"
-      redirect_to candy_path(@candy)
-    else
-      flash[:error] = @candy.errors.full_messages.join('. ')
-      render :new
-    end
-  end
-
-  def index
-    @candy = Candy.new
-    @candies = Candy.all
-  end
-
-  def show
-    @candy = Candy.find(params[:id])
-  end
-
-  private
-
-  def candy_params
-    params.require(:candy).permit(:name, :description, :image_url)
-  end
-end
-```
-
-Pro-tip: Rails' Authenticity Token is used to prevent "cross-site request forgery (CSRF)" attacks. As an example, when you fill out a form for submitting a new candy to my app, Rails would _usually_ generate a hidden field storing the authenticity token, confirming with the server that the information is coming from Rails. However, in this case, we're not _just_ communicating with Rails, we're also communicating with a React app on our front-end! In our API controller, it makes sense to add the line `skip_before_action :verify_authenticity_token`.
+However, in this case, we're not _just_ communicating with Rails, we're also communicating with a React app on our front-end! In our API controller, it makes sense to add the line `skip_before_action :verify_authenticity_token`.
 
 It's a good idea to use *strong params* in your API controller as well as in your regular controller.
-
-```
-class Api::V1::CandiesController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  def index
-    render json: Candy.all
-  end
-
-  def update
-    candy = Candy.find(params[:id])
-    candy.points += 1
-    if candy.save!
-      render json: candy
-    end
-  end
-
-  def show
-    candy = Candy.find(params[:id])
-    render json: candy
-  end
-
-  def candy_params
-    params.require(:candy).permit(:id, :name, :points)
-  end
-end
-```
 
 ### How Do I Build Different Pages in React?
 
