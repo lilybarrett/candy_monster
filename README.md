@@ -188,7 +188,7 @@ fetch(`http://localhost:3000/api/v1/candies/${pageId}`)
 A few tips from my own experiences...
 
 * Always start simple and small. When building a component, make sure you can see it rendering "Hello World" before you add the complicated stuff. When making a Fetch request, put a `binding.pry` inside your controller action to ensure you're sending a request to the right endpoint, before adding anything else.
-* Make tons of use of `binding.pry` and `debugger`.
+* Make tons of use of `binding.pry` and `debugger`, sometimes at the same time.
 * When a React component all of a sudden doesn't render, it could be a typo. Seriously. React is kinda a drama queen when it comes to syntax. Look for missing semi-colons and extra curly braces.
 * Test, test, test. Learn to read and understand test errors. They often offer clues to what could be going on.
 
