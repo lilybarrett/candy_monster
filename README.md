@@ -134,13 +134,17 @@ Div/button on `show.html.erb` for rendering the CounterButton component:
 <button type="button" class="button large" id="counter-button" data-id="<%= @candy.id %>"></button>
 ```
 
-The super cool thing about `data-id` is that it translates into an object that JavaScript can understand! From my CounterButton component, I can now use:
+The super cool thing about `data-id` is that it translates into an object that JavaScript can understand! On the React side, from my CounterButton component, I can now use the following code to grab the Active Record object's ID:
 
 ```
 let pageId = parseInt(document.getElementById('counter-button').dataset.id)
 ```
 
-and get the ActiveRecord object's ID back, storing it in `pageId`.
+Let's break that down:
+
+* `document.getElementById('counter-button')` grabs the element on the page with an ID of `counter-button`.
+* I call `.dataset.id` to grab the ActiveRecord object ID that's been passed through `data-id`.
+* The ActiveRecord ID is currently a string. To convert from string to integer, I use JavaScript's `parseInt` function.
 
 I can then interpolate `pageId` into my Fetch call, as such:
 
