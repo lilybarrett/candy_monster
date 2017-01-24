@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Candy from './Candy';
+import CandyListItem from './CandyListItem';
 
 class CandyList extends Component {
   constructor(props) {
@@ -7,15 +8,13 @@ class CandyList extends Component {
     this.state = {
       candies: []
     }
+    this.getData = this.getData.bind(this);
   }
 
-  componentDidMount() {
-    debugger;
-    let currentThis = this;
+  getData() {
     fetch('http://localhost:3000/api/v1/candies.json')
       .then(response => {
         if (response.ok) {
-          debugger;
           return response;
         } else {
           let errorMessage = `${response.status} ($response.statusText)`,
@@ -25,28 +24,28 @@ class CandyList extends Component {
       })
       .then(response => response.json())
       .then(body => {
-        debugger;
         this.setState({candies: body});
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  componentDidMount() {
+    this.getData();
+  }
+
   render() {
-    let candies = this.state.candies.map((candy) => {
-      debugger;
-      return(
-        <Candy
+    let newCandies = this.state.candies.map((candy) => {
+      return (
+        <CandyListItem
+          id={candy.id}
           key={candy.id}
           name={candy.name}
         />
       )
-    })
-
+    });
     return(
       <div>
-        <ul>
-          {candies}
-        </ul>
+        {newCandies}
       </div>
     )
   }

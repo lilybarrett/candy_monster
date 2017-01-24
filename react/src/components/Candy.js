@@ -1,23 +1,24 @@
 import React from 'react';
 
 const Candy = (props) => {
+
   let thisCandyName;
+  let thisCandyDescription;
+  
   if (document.getElementById('show-page')) {
     let pageId = parseInt(document.getElementById('show-page').dataset.id);
     props.candies.map(candy => {
       if (candy.id === pageId) {
         thisCandyName = candy.name;
+        thisCandyDescription = candy.description;
       }
-    });
-  } else {
-    props.candies.map(candy => {
-      thisCandyName = candy.name;
     });
   }
 
   return(
     <div>
-      {thisCandyName}
+      <p>{thisCandyName}</p>
+      <p>{thisCandyDescription}</p>
     </div>
   )
 }
