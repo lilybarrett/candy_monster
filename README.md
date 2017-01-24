@@ -1,27 +1,137 @@
-### Clinic: Adding React to Your Rails App
+### Candy Monster Clinic: Answering Your React-on-Rails Questions!
+
+### Introduction to Candy Monster!
+
+Candy Monster is an app built in Rails and React, allowing you to add information about the Valentine's Day candies you've consumed and loved (or hated).
+
+You can view your consumed candies on the index page, where the list of candies has been built in React and the form for adding a new candy has been built in Rails. When you click on an image of a candy, you can navigate to the candy's show page, where the candy's information is displayed using a Rails ERB template and the "Yum-o-meter" button has been built in React.
 
 ### How Do I Create a Rails API Endpoint?
 
-<!-- Reminder about namespacing -- API/V1/controllers -->
-<!-- Reminder from AJAX/Sinatra about creating JSON-only endpoints -->
+We encourage you to namespace your API controllers, as in the Candy Monster app:
+
+```
+namespace :api do
+  namespace :v1 do
+    resources :candies, only: [:index, :update, :show]
+  end
+end
+```
+
+In your `controllers` folder, you should then create an `api` folder, a `v1` folder, and, finally, a `candies_controller.rb` within that. This helps keep your controllers organized, reminds you which ones are your API controllers, and allows you to store different versions of your API if need be.
 
 ### How Do My Controller Actions Change?
 
-<!-- Question to self: If in Rails app, should we update the Application Controller to render json/use null session...or would that break the Railsy parts of the app? -->
+Your API endpoint should only render JSON, allowing Rails & React to communicate & transmit data back and forth. The Candy Monster app also needs non-API controller actions representing your Rails views, because Rails uses its `index` and `show` views to display the React components we've created. If you'd rather use pure Rails to facilitate other actions, you should include those in your non-API controller, as well.
 
-<!-- Should we just specify the format within our particular controller action? -->
+```
+resources :candies, only: [:index, :create, :show]
 
-### How Do My Rails Views Change?
+```
 
-<!-- Note to self -- check on this! -- but you should simply be able to provide an empty div with an ID on it that's referenced in main.js -->
+Pro-tip: Rails' Authenticity Token is used to prevent "cross-site request forgery (CSRF)" attacks. As an example, when you fill out a form for submitting a new candy to my app, Rails generates a hidden field storing the authenticity token, ensuring the server that the information is coming from Rails. However, in this case, we're not _just_ communicating with Rails, we're also communicating with a React app on our front-end! In our API controller, it makes sense to add the line `skip_before_action :verify_authenticity_token`.
+
+It's a good idea to use *strong params* in your API controller as well as in your regular controller.
+
+```
+class Api::V1::CandiesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  def index
+    render json: Candy.all
+  end
+
+  def update
+    candy = Candy.find(params[:id])
+    candy.points += 1
+    if candy.save!
+      render json: candy
+    end
+  end
+
+  def show
+    candy = Candy.find(params[:id])
+    render json: candy
+  end
+
+  def candy_params
+    params.require(:candy).permit(:id, :name, :points)
+  end
+end
+```
 
 ### How Do I Build Different Pages in React?
 
+First things first, create different Rails views with `div`s that have `id`s telling React where to render a component on that page. Easy peasy.
 
-### Do I Need to Put Anything in My Assets/JavaScripts Folder?
+Well, that's great, you say. But how do I deal with rendering different ReactDOMs for different pages? I only have one `main.js` file, and it looks like this:
 
-<!-- No -->
+```
+$(function() {
+  ReactDOM.render(
+    <Something />,
+    document.getElementById('something')
+  );
+});
+```
 
-### Why is a lot of the stuff I see on Google wrong/outdated even if it's only six months old?!
+Avoid adding new entry points for additional `main.js`-like files to your `webpack.config.js`. Things can get complicated really fast. Instead, continue to use your `main.js` file as your overarching entry point for your React components, using conditional logic that looks for a particular `div` on the page and makes a particular `ReactDOM.render` call based on that:
 
-<!-- React is new and constantly evolving! -->
+```
+$(function() {
+  if (document.getElementById('main-list')) {
+    ReactDOM.render(
+      <CandyList />,
+      document.getElementById('main-list')
+    );
+  };
+  if (document.getElementById('counter-button')) {
+    ReactDOM.render(
+      <CounterButton />,
+      document.getElementById('counter-button')
+    );
+  }
+});
+```
+
+Don't forget to import everything you need into your `main.js` file.
+
+### How can I use params-like logic in React?
+
+Rails `params` are so nice. They're part of why convention over configuration is so awesome. They make it incredibly easy for us to grab form inputs, information from the URL about which page we're on, and so forth.
+
+Let's say I'm on Candy Monster's show page for a candy, and I want to use the Yum-o-Meter button to send a Fetch request to update the *yum* points for that candy. I can see from the URL that the candy's ID is `5`, but React doesn't use `params` like Rails does. What can I do?
+
+On the `div` on `show.html.erb`, where I'm rendering the CounterButton component, I can add a special attribute, `data-id` and pass in the `id` for the ActiveRecord object from my non-API controller's `show` action.
+
+Show action in controller:
+
+```
+def show
+  @candy = Candy.find(params[:id])
+end
+```
+
+Div/button on `show.html.erb` for rendering the CounterButton component:
+
+```
+<button type="button" class="button large" id="counter-button" data-id="<%= @candy.id %>"></button>
+```
+
+The super cool thing about `data-id` is that it translates into an object that JavaScript can understand! From my CounterButton component, I can now call `let pageId = parseInt(document.getElementById('counter-button').dataset.id);` and get the ActiveRecord object's ID back, storing it in `pageId`.
+
+I can then interpolate it into my Fetch call, as such: `fetch(`http://localhost:3000/api/v1/candies/${pageId}`)`.
+
+### How Do I Troubleshoot?
+
+A few tips from my own experiences...
+
+* Always start simple and small. When building a component, make sure you can see it rendering "Hello World" before you add the complicated stuff. When making a Fetch request, put a `binding.pry` inside your controller action to ensure you're sending a request to the right endpoint, before adding anything else.
+* Make tons of use of `binding.pry` and `debugger`.
+* When a React component all of a sudden doesn't render, it could be a typo. Seriously. React is kinda a drama queen when it comes to syntax. Look for missing semi-colons and extra curly braces.
+* Test, test, test. Learn to read and understand test errors. They often offer clues to what could be going on.
+
+### A Reminder
+
+React is new and constantly evolving! By learning it now, you're on the cutting-edge. However, we understand there are plenty of frustrations that come with working with a new framework that doesn't have set-in-stone conventions like Rails now does. Some of the stuff you'll see online, on Stack Overflow and such, is now out-of-date, even if it was posted relatively recently.
+
+Keep asking questions and plugging along!

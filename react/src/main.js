@@ -11,9 +11,6 @@ $(function() {
       document.getElementById('main-list')
     );
   };
-});
-
-$(function() {
   if (document.getElementById('counter-button')) {
     ReactDOM.render(
       <CounterButton />,

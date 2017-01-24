@@ -59,7 +59,7 @@ class CounterButton extends Component {
   render() {
     return(
       <div onClick={this.handleClick}>
-        <h1>Yumometer: {this.state.clickCount}</h1>
+        <h1>Yum-o-Meter: {this.state.clickCount}</h1>
       </div>
     );
   }
