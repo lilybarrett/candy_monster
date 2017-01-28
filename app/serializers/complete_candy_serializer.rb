@@ -1,4 +1,5 @@
-class CandySerializer < ActiveModel::Serializer
+class CompleteCandySerializer < ActiveModel::Serializer
+  root :candy
   attributes :name, :url, :points, :id
 
   def url
