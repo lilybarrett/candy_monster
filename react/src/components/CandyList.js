@@ -23,7 +23,7 @@ class CandyList extends Component {
       })
       .then(response => response.json())
       .then(body => {
-        this.setState({candies: body});
+        this.setState({candies: body["candies"]});
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -38,7 +38,7 @@ class CandyList extends Component {
         <CandyListItem
           id={candy.id}
           key={candy.id}
-          url={candy.image_url}
+          url={candy.url}
           name={candy.name}
         />
       )

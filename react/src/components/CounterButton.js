@@ -24,7 +24,7 @@ class CounterButton extends Component {
       })
       .then(response => response.json())
       .then(body => {
-        this.setState({clickCount: body.points});
+        this.setState({clickCount: body["candy"].points});
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -50,7 +50,7 @@ class CounterButton extends Component {
       })
       .then(data => {
         console.log(data);
-        newClickCount = data.points;
+        newClickCount = data["candy"].points;
         this.setState({ clickCount: newClickCount })
       })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
