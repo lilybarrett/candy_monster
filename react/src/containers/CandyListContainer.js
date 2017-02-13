@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import CandyListItem from './CandyListItem';
+import CandyListItem from '../components/CandyListItem';
 
-class CandyList extends Component {
+class CandyListContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -44,11 +44,11 @@ class CandyList extends Component {
       )
     });
     return(
-      <div className="candy-index">
+      <div className="app">
         {newCandies}
       </div>
     )
   }
 }
 
-export default CandyList;
+export default CandyListContainer;

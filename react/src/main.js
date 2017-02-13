@@ -1,20 +1,21 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CandyList from './components/CandyList';
-import CounterButton from './components/CounterButton';
+import { browserHistory } from 'react-router';
+
+import routes from './routes';
+import Root from './components/Root';
+
+let reactAppRender = (element) => {
+  ReactDOM.render(
+    <Root history={browserHistory} routes={routes} />,
+    element
+  );
+};
 
 $(function() {
-  if (document.getElementById('main-list')) {
-    ReactDOM.render(
-      <CandyList />,
-      document.getElementById('main-list')
-    );
-  };
-  if (document.getElementById('counter-button')) {
-    ReactDOM.render(
-      <CounterButton />,
-      document.getElementById('counter-button')
-    );
+  let reactApp = document.getElementById('app');
+  if (reactApp) {
+    reactAppRender(reactApp);
   }
 });
