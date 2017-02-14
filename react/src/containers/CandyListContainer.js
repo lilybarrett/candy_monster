@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CandyListItem from '../components/CandyListItem';
+import CandyListTile from '../components/CandyListTile';
 
 class CandyListContainer extends Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class CandyListContainer extends Component {
   render() {
     let newCandies = this.state.candies.map((candy) => {
       return (
-        <CandyListItem
+        <CandyListTile
           id={candy.id}
           key={candy.id}
           url={candy.url}
@@ -44,7 +44,7 @@ class CandyListContainer extends Component {
       )
     });
     return(
-      <div className="app">
+      <div>
         {newCandies}
       </div>
     )

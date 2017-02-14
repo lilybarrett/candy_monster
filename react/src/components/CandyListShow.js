@@ -3,15 +3,13 @@ import { Link } from 'react-router';
 import CounterButtonContainer from '../containers/CounterButtonContainer';
 import BackButton from './BackButton';
 
-const CandyListItem = (props) => {
-
+const CandyListShow = (props) => {
+  debugger;
   return(
     <div className="row">
       <div className="list-item text-center small-4 columns">
+        <img src={props.url} className="list-item-image"/>
         <p>{props.name}</p>
-        <div>
-          <Link to={`/candies/${props.id}`}><img src={props.url} className="list-item-image"/></Link>
-        </div>
         <button className="button small">
           <CounterButtonContainer />
         </button>
@@ -23,4 +21,4 @@ const CandyListItem = (props) => {
   )
 }
 
-export default CandyListItem;
+export default CandyListShow;
