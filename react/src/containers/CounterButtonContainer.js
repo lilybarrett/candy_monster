@@ -11,7 +11,7 @@ class CounterButtonContainer extends Component {
   }
 
   componentDidMount() {
-    let pageId = parseInt(document.getElementById('counter-button').dataset.id);
+    let pageId = this.props.pageId;
     fetch(`http://localhost:3000/api/v1/candies/${pageId}`)
       .then(response => {
         if (response.ok) {
@@ -31,7 +31,7 @@ class CounterButtonContainer extends Component {
 
   handleClick(event) {
     let newClickCount;
-    let pageId = parseInt(document.getElementById('counter-button').dataset.id);
+    let pageId = this.props.pageId;
     let fetchBody = { id: pageId };
 
     fetch(`http://localhost:3000/api/v1/candies/${pageId}`,
@@ -50,7 +50,7 @@ class CounterButtonContainer extends Component {
       })
       .then(data => {
         console.log(data);
-        newClickCount = data["candy"].points;
+        newClickCount = data.candy.points;
         this.setState({ clickCount: newClickCount })
       })
     .catch(error => console.error(`Error in fetch: ${error.message}`));

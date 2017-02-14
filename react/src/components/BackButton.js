@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 
 const BackButton = () => {
   return(
-    <div className="small-6 columns">
+    <div className="small-6 small-centered columns">
       <button className="button large" onClick={browserHistory.goBack}>Back</button>
     </div>
   )

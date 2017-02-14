@@ -8,7 +8,7 @@ import Root from './components/Root';
 
 let reactAppRender = (element) => {
   ReactDOM.render(
-    <Root history={browserHistory} routes={routes} />,
+    <Root browserHistory={browserHistory} routes={routes} />,
     element
   );
 };

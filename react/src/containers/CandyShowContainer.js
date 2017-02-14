@@ -5,12 +5,12 @@ class CandyShowContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      candy: null
+      candy: {}
       }
     }
 
   componentDidMount() {
-    getData();
+    this.getData();
   }
 
   getData() {
@@ -23,12 +23,22 @@ class CandyShowContainer extends Component {
   }
 
   render() {
+    //ask state if it's defined, and if not, return div with "loading" text
+    //else return CandyListShow
+    // this.getData();
+    let candyKey = this.state.candy.id;
+    let candyId = this.props.params.id;
+    let candyUrl = this.state.candy.url;
+    let candyName = this.state.candy.name;
+    let candyDescription = this.state.candy.description;
+
     return(
       <CandyListShow
-        key={this.state.candy.id}
-        id={this.state.candy.id}
-        url={this.state.candy.url}
-        name={this.state.candy.name}
+        key={candyKey}
+        id={candyId}
+        description={candyDescription}
+        url={candyUrl}
+        name={candyName}
       />
     )
   }

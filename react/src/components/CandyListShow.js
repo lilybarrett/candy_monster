@@ -4,18 +4,22 @@ import CounterButtonContainer from '../containers/CounterButtonContainer';
 import BackButton from './BackButton';
 
 const CandyListShow = (props) => {
-  debugger;
   return(
     <div className="row">
-      <div className="list-item text-center small-4 columns">
+      <div className="list-item-show text-center small-4 small-centered columns">
         <img src={props.url} className="list-item-image"/>
-        <p>{props.name}</p>
+        <div className="list-item-show-text">
+          <p><strong>Candy Name:</strong> {props.name}</p>
+          <p><strong>Thoughts:</strong> {props.description}</p>
+        </div>
         <button className="button small">
-          <CounterButtonContainer />
+          <CounterButtonContainer
+            pageId={props.id}
+          />
         </button>
-        <button className="button small">
+        <div>
           <BackButton />
-        </button>
+        </div>
       </div>
     </div>
   )

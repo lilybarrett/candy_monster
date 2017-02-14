@@ -1,6 +1,6 @@
 class CompleteCandySerializer < ActiveModel::Serializer
   root :candy
-  attributes :name, :url, :points, :id
+  attributes :name, :description, :url, :points, :id
 
   def url
     object.image_url

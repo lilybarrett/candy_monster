@@ -8,7 +8,7 @@ import Layout from './components/Layout';
 let routes = (
   <Route path="/" component={Layout}>
     <IndexRoute component={CandyListContainer} />
-    <Route path="/candies/:id" component={CandyShowContainer} />
+    <Route path="candies/:id" component={CandyShowContainer} />
   </Route>
 );
 
