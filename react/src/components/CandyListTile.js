@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import CounterButtonContainer from '../containers/CounterButtonContainer';
-import BackButton from './BackButton';
 
 const CandyListTile = (props) => {
 

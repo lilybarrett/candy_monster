@@ -23,24 +23,30 @@ class CandyShowContainer extends Component {
   }
 
   render() {
-    //ask state if it's defined, and if not, return div with "loading" text
-    //else return CandyListShow
-    // this.getData();
-    let candyKey = this.state.candy.id;
-    let candyId = this.props.params.id;
-    let candyUrl = this.state.candy.url;
-    let candyName = this.state.candy.name;
-    let candyDescription = this.state.candy.description;
+    debugger;
+    if (this.state.candy === null) {
+      return(
+        <div>
+          Loading
+        </div>
+      )
+    } else {
+      let candyKey = this.state.candy.id;
+      let candyId = this.props.params.id;
+      let candyUrl = this.state.candy.url;
+      let candyName = this.state.candy.name;
+      let candyDescription = this.state.candy.description;
 
-    return(
-      <CandyListShow
-        key={candyKey}
-        id={candyId}
-        description={candyDescription}
-        url={candyUrl}
-        name={candyName}
-      />
-    )
+      return(
+        <CandyListShow
+          key={candyKey}
+          id={candyId}
+          description={candyDescription}
+          url={candyUrl}
+          name={candyName}
+        />
+      )
+    };
   }
 }
 

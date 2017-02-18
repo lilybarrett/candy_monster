@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 import CounterButtonContainer from '../containers/CounterButtonContainer';
-import BackButton from './BackButton';
 
 const CandyListShow = (props) => {
   return(
@@ -17,8 +16,8 @@ const CandyListShow = (props) => {
             pageId={props.id}
           />
         </button>
-        <div>
-          <BackButton />
+        <div className="small-6 small-centered columns">
+          <Link to={`/`}>Back</Link>
         </div>
       </div>
     </div>
