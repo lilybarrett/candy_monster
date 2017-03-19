@@ -2,7 +2,7 @@
 
 ### What is React Router?
 
-A library built on top of React, Router allows you to quickly add multiple pages and flows of information, and to keep the browser in touch with what's being displayed on the page. At a lower level, Router is really just a component that loads other components based on the URL.
+The Router library, built on top of React, allows you to add multiple pages and flows of information, and to seamlessly keep the browser in touch with what's being displayed on the page. At a lower level, Router is really just a component that loads other components based on the URL.
 
 Among the many reasons why Router is great: It offers you links to other parts of your React app, allows you to nest routes, and uses JavaScript to update the URL without making an HTTP request. Router also allows you to use dynamic routing, rather than manually coding the links in your app.
 
@@ -18,8 +18,6 @@ To dig a little deeper into our `routes.js` file itself, we're setting our `Inde
 
 We also have a `Route` for our `CandyShowContainer`, and both this route and our `IndexRoute` are wrapped inside a `Route` which renders our Layout component. More on that in a minute.
 
-By doing all this, you're giving Router instructions about how to match the URL in your browser, and about what component to display when the URL matches.
-
 A few things to note:
 
 * Most of the components that get passed into our `Route` components tend to be "containers" that store the state for each page (or URL) in our app, rather than presentational components.
@@ -28,9 +26,11 @@ A few things to note:
 
 ### Using Nested Routes
 
-But what's that Layout component all about, and why do we render it in a top-level Route in our routes.js file?
+But what's that `Layout` component all about, and why do we render it in a top-level Route in our routes.js file?
 
-Well, it probably makes sense to have our nav bar (even if it does nothing else but link back to our homepage, at the moment) present on every page, so we need to find a way to share that bit of UI. Creating a Layout component is a good way to keep things semantically nice and organized. Next, in order to force all our pages to render the nav bar, we nest all the other routes below the one that renders it. The this.props.children line in Layout.js allows us to render "children" components in addition to our ubiquitous nav bar.
+Well, while our `Layout` isn't doing too much for us _at the moment_, if we were to create a nav bar and decide we want it to be present on every page, we'd need to find a way to share that bit of UI.
+
+Creating a `Layout` component is a good way to keep things semantically nice and organized. Next, in order to force all our pages to share a particular bit of UI, we nest all the other routes below the one that renders it. The `this.props.children` line in Layout.js allows us to render "children" components in addition to our theoretically ubiquitous nav bar.
 
 React is often referred to as a series of "boxes within boxes," and it's a pretty apt metaphor. Putting routes inside other routes allows us to have greater control over which UI is rendered where.
 
