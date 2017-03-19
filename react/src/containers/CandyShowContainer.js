@@ -23,7 +23,6 @@ class CandyShowContainer extends Component {
   }
 
   render() {
-    debugger;
     if (this.state.candy === null) {
       return(
         <div>
