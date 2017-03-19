@@ -1,123 +1,44 @@
-### Candy Monster Clinic: Answering Your React-on-Rails Questions!
+### Candy Monster Clinic: Answering Your React Router Questions!
 
-### Introduction to Candy Monster!
+### What is React Router?
 
-Candy Monster is an app built in Rails and React, allowing you to add information about the Valentine's Day candies you've consumed and loved (or hated).
+A library built on top of React, Router allows you to quickly add multiple pages and flows of information, and to keep the browser in touch with what's being displayed on the page. At a lower level, Router is really just a component that loads other components based on the URL.
 
-You can view your consumed candies on the index page, where the list of candies has been built in React and the form for adding a new candy has been built in Rails. When you click on an image of a candy, you can navigate to the candy's show page, where the candy's information is displayed using a Rails ERB template and a React "Yum-o-meter" button allows you to set the candy's tastiness "score."
+Among the many reasons why Router is great: It offers you links to other parts of your React app, allows you to nest routes, and uses JavaScript to update the URL without making an HTTP request. Router also allows you to use dynamic routing, rather than manually coding the links in your app.
 
-### How Do I Create a Rails API Endpoint?
+### Mapping URLs to React Components
 
-We encourage you to namespace your API controllers.
+To use Router, instead of using App as usual, you'll wrap everything in a new top-level component called `Root` that utilizes everything we need from Router.
 
-In your `controllers` folder, you should create an `api` folder, a `v1` folder, and, finally, a `controller.rb` file within that. This helps keep your controllers organized, reminds you which ones are your API controllers, and allows you to store different versions of your API if need be.
+`Root` will take `browserHistory` and `routes` -- both of which we get from Router -- as props. `browserHistory` uses the History API built into the browser to create clean, easy-to-read URLs. `routes` is a collection of `Route` components, each of which takes another component as props. This may sound a tiny bit Inception-y, but we promise it's not too bad!
 
-Let's check out the Rails API endpoint for Candy Monster.
+Our `routes.js` file lays out all the Route components -- and their level of nesting -- within our app. We'll import that file into our `main.js` file so we can pass our defined routes down as props to our `Root` component.
 
-### How Do My Controller Actions Change?
+To dig a little deeper into our `routes.js` file itself, we're setting our `IndexRoute`, or default component, so it displays the `CandyListContainer`, or the list of all the candies in our database. When we navigate to our root path for the application `/`, it will display that list.
 
-Your API endpoint should only render JSON, allowing Rails & React to communicate & transmit data back and forth.
+We also have a `Route` for our `CandyShowContainer`, and both this route and our `IndexRoute` are wrapped inside a `Route` which renders our Layout component. More on that in a minute.
 
-The Candy Monster app, like others, also requires non-API controller actions representing Rails views. In this case, Rails needs to use its `index` and `show` views to display the React components we've created.
+By doing all this, you're giving Router instructions about how to match the URL in your browser, and about what component to display when the URL matches.
 
-This is also handy in case a user has JavaScript disabled on their browser, and you still want them to be able to view your site!
+A few things to note:
 
-Pro-tip: Rails' Authenticity Token is used to prevent "cross-site request forgery (CSRF)" attacks. As an example, when you fill out a form for submitting a new candy to my app, Rails would _usually_ generate a hidden field storing the authenticity token, confirming with the server that the information is coming from Rails.
+* Most of the components that get passed into our `Route` components tend to be "containers" that store the state for each page (or URL) in our app, rather than presentational components.
+* All our URLs need to be initially defined in Rails' `routes.rb` file.
+* We only pass URLs that display views into our `Route` components. The API endpoints that we use to fetch our data (i.e., `/api/v1/candies.json` in the RestaurantsIndexContainer) only need to be defined inside Rails' `routes.rb` file. We do not tell Router to listen to those.
 
-However, in this case, we're not _just_ communicating with Rails, we're also communicating with a React app on our front-end! In our API controller, it makes sense to add the line `skip_before_action :verify_authenticity_token`.
+### Using Nested Routes
 
-It's a good idea to use *strong params* in your API controller as well as in your regular controller.
+But what's that Layout component all about, and why do we render it in a top-level Route in our routes.js file?
 
-### How Do I Build Different Pages in React?
+Well, it probably makes sense to have our nav bar (even if it does nothing else but link back to our homepage, at the moment) present on every page, so we need to find a way to share that bit of UI. Creating a Layout component is a good way to keep things semantically nice and organized. Next, in order to force all our pages to render the nav bar, we nest all the other routes below the one that renders it. The this.props.children line in Layout.js allows us to render "children" components in addition to our ubiquitous nav bar.
 
-First things first, create different Rails views with `div`s that have `id`s telling React where to render a component on that page. Easy peasy.
+React is often referred to as a series of "boxes within boxes," and it's a pretty apt metaphor. Putting routes inside other routes allows us to have greater control over which UI is rendered where.
 
-in index.html.erb:
+### Creating Links
 
-```
-<div id="main-list">
-</div>
-```
+To create links between pages in our application, we will use React Router's `Link` component, which performs similarly to an anchor tag (`<a>`), except that it's aware of its Router context. Clicking on a `Link` component will take you to the specified part of your React app without making an HTTP request. You can also use it to dynamically create links.
 
-in show.html.erb:
-
-```
-<button type="button" class="button large" id="counter-button" data-id="<%= @candy.id %>"></button>
-```
-
-Well, that's great, you say. But how do I deal with rendering different ReactDOMs for different pages? I only have one `main.js` file, and it looks like this:
-
-```
-$(function() {
-  ReactDOM.render(
-    <Something />,
-    document.getElementById('something')
-  );
-});
-```
-
-Avoid adding new entry points for additional `main.js`-like files to your `webpack.config.js`. Things can get complicated really fast. Instead, continue to use your `main.js` file as your overarching entry point for your React components, using conditional logic that looks for a particular `div` on the page and makes a particular `ReactDOM.render` call based on that:
-
-```
-$(function() {
-  if (document.getElementById('main-list')) {
-    ReactDOM.render(
-      <CandyList />,
-      document.getElementById('main-list')
-    );
-  };
-  if (document.getElementById('counter-button')) {
-    ReactDOM.render(
-      <CounterButton />,
-      document.getElementById('counter-button')
-    );
-  }
-});
-```
-
-Don't forget to import everything you need into your `main.js` file.
-
-### How can I use params-like logic in React?
-
-Rails `params` are so nice. They're part of why convention over configuration is so awesome. They make it incredibly easy for us to grab form inputs, information from the URL about which page we're on, and so forth.
-
-Let's say I'm on Candy Monster's show page for a candy, and I want to use the Yum-o-Meter button to send a Fetch request to update the **yum** points for that *specific* candy. I can see from the URL that the candy's ID is `5`, but React doesn't use `params` like Rails does. What can I do?
-
-On the `div` on `show.html.erb`, where I'm rendering the CounterButton component, I can add a special attribute, `data-id`, and pass in the `id` for the ActiveRecord object from my non-API controller's `show` action.
-
-Show action in controller:
-
-```
-def show
-  @candy = Candy.find(params[:id])
-end
-```
-
-Div/button on `show.html.erb` for rendering the CounterButton component:
-
-```
-<button type="button" class="button large" id="counter-button" data-id="<%= @candy.id %>"></button>
-```
-
-The super cool thing about `data-id` is that it translates into an object that JavaScript can understand! On the React side, from my CounterButton component, I can now use the following code to grab the Active Record object's ID:
-
-```
-let pageId = parseInt(document.getElementById('counter-button').dataset.id)
-```
-
-Let's break that down:
-
-* `document.getElementById('counter-button')` grabs the element on the page with an ID of `counter-button`.
-* I call `.dataset.id` to grab the ActiveRecord object ID that's been passed through `data-id`.
-* The ActiveRecord ID is currently a string. To convert from string to integer, I use JavaScript's `parseInt` function.
-
-I can then interpolate `pageId` into my Fetch call, as such:
-
-```
-fetch(`http://localhost:3000/api/v1/candies/${pageId}`)
-```
-
-### How Do I Troubleshoot?
+## How Do I Troubleshoot?
 
 A few tips from my own experiences...
 
