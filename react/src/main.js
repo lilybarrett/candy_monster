@@ -1,19 +1,19 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CandyList from './components/CandyList';
-import CounterButton from './components/CounterButton';
+import CandyListContainer from './containers/CandyListContainer';
+import CounterButtonContainer from './containers/CounterButtonContainer';
 
 $(function() {
   if (document.getElementById('main-list')) {
     ReactDOM.render(
-      <CandyList />,
+      <CandyListContainer />,
       document.getElementById('main-list')
     );
   };
   if (document.getElementById('counter-button')) {
     ReactDOM.render(
-      <CounterButton />,
+      <CounterButtonContainer />,
       document.getElementById('counter-button')
     );
   }

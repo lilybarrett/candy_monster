@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CounterButton extends Component {
+class CounterButtonContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -8,25 +8,6 @@ class CounterButton extends Component {
     };
 
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  componentDidMount() {
-    let pageId = parseInt(document.getElementById('counter-button').dataset.id);
-    fetch(`http://localhost:3000/api/v1/candies/${pageId}`)
-      .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          let errorMessage = `${response.status} ($response.statusText)`,
-            error = new Error(errorMessage);
-          throw(error);
-        }
-      })
-      .then(response => response.json())
-      .then(body => {
-        this.setState({clickCount: body["candy"].points});
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   handleClick(event) {
@@ -50,7 +31,7 @@ class CounterButton extends Component {
       })
       .then(data => {
         console.log(data);
-        newClickCount = data["candy"].points;
+        newClickCount = data.candy.points;
         this.setState({ clickCount: newClickCount })
       })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -65,4 +46,4 @@ class CounterButton extends Component {
   }
 }
 
-export default CounterButton;
+export default CounterButtonContainer;
