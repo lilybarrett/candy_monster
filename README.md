@@ -2,15 +2,15 @@
 
 ### What is React Router?
 
-The Router library, built on top of React, allows you to add multiple pages and flows of information, and to seamlessly keep the browser in touch with what's being displayed on the page. At a lower level, Router is really just a component that loads other components based on the URL.
+React's Router library allows you to add multiple pages and flows of information, and to seamlessly keep the browser in touch with your UI.
 
-Among the many reasons why Router is great: It offers you links to other parts of your React app, allows you to nest routes, and uses JavaScript to update the URL without making an HTTP request. Router also allows you to use dynamic routing, rather than manually coding the links in your app.
+Router allows you to nest routes to share UI across different pages while keeping your code DRY, allows you to set up dynamic links to different parts of your app, and updates the URL without making an HTTP request.
 
-### Mapping URLs to React Components
+### Connecting URLs to React Components
 
-To use Router, instead of using App as usual, you'll wrap everything in a new top-level component called `Root` that utilizes everything we need from Router.
+To use Router, you'll wrap everything in a top-level component called `Root` that calls upon everything we need from Router.
 
-`Root` will take `browserHistory` and `routes` -- both of which we get from Router -- as props. `browserHistory` uses the History API built into the browser to create clean, easy-to-read URLs. `routes` is a collection of `Route` components, each of which takes another component as props. This may sound a tiny bit Inception-y, but we promise it's not too bad!
+`Root` will take `browserHistory` and `routes` -- both of which we get from Router -- as props. `browserHistory` uses the History API built into the browser to create clean URLs. `routes` is a collection of `Route` components, each of which takes another component as props.
 
 Our `routes.js` file lays out all the Route components -- and their level of nesting -- within our app. We'll import that file into our `main.js` file so we can pass our defined routes down as props to our `Root` component.
 
@@ -22,7 +22,7 @@ A few things to note:
 
 * Most of the components that get passed into our `Route` components tend to be "containers" that store the state for each page (or URL) in our app, rather than presentational components.
 * All our URLs need to be initially defined in Rails' `routes.rb` file.
-* We only pass URLs that display views into our `Route` components. The API endpoints that we use to fetch our data (i.e., `/api/v1/candies.json` in the RestaurantsIndexContainer) only need to be defined inside Rails' `routes.rb` file. We do not tell Router to listen to those.
+* We only pass URLs that display views into our `Route` components. The API endpoints that we use to fetch our data (i.e., `/api/v1/candies.json` in the CandyListContainer) only need to be defined inside Rails' `routes.rb` file. We do not tell Router to listen to those.
 
 ### Using Nested Routes
 
@@ -32,11 +32,17 @@ Well, while our `Layout` isn't doing too much for us _at the moment_, if we were
 
 Creating a `Layout` component is a good way to keep things semantically nice and organized. Next, in order to force all our pages to share a particular bit of UI, we nest all the other routes below the one that renders it. The `this.props.children` line in Layout.js allows us to render "children" components in addition to our theoretically ubiquitous nav bar.
 
-React is often referred to as a series of "boxes within boxes," and it's a pretty apt metaphor. Putting routes inside other routes allows us to have greater control over which UI is rendered where.
+Putting routes inside other routes allows us to have greater control over which UI is rendered where.
 
 ### Creating Links
 
 To create links between pages in our application, we will use React Router's `Link` component, which performs similarly to an anchor tag (`<a>`), except that it's aware of its Router context. Clicking on a `Link` component will take you to the specified part of your React app without making an HTTP request. You can also use it to dynamically create links.
+
+In our `CandyListTile` component, we've included the following line of code:
+
+`<Link to={`/candies/${props.id}`}><img src={props.url} className="list-item-image"/></Link>`.
+
+This allows us, from our list of candies, to create dynamic links leading to each candy's show page.
 
 ## How Do I Troubleshoot?
 
