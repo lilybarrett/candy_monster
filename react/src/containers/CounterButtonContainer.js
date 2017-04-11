@@ -32,11 +32,9 @@ class CounterButtonContainer extends Component {
   handleClick(event) {
     let newClickCount;
     let pageId = this.props.pageId;
-    let fetchBody = { id: pageId };
 
     fetch(`http://localhost:3000/api/v1/candies/${pageId}`,
-      { method: "PATCH",
-        body: fetchBody
+      { method: "PATCH"
       })
       .then(response => {
         if (response.ok) {
